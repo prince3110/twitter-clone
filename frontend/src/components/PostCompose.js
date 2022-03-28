@@ -27,7 +27,7 @@ function PostCompose() {
         userId: `${userId}`,
         content: `${postContent}`
     };
-    await axios.post("http://localhost:8080/api/auth/insertpost",data)
+    await axios.post("http://localhost:8080/api/auth/post",data)
     .then(
         res => {
             console.log(res);
@@ -61,14 +61,6 @@ function PostCompose() {
               style={{ resize: "none", height: "10rem", width: "15rem" }}
             />
           </Form.Group>
-          {/* <Form.Group className="mb-3">
-            <Form.Label>Image (Optional)</Form.Label>
-            <Form.Control
-              type="file"
-              accept=".jpg, .jpeg, .png"
-              onChange={onUploadFileChange}
-            />
-          </Form.Group> */}
           <div className="d-flex justify-content-end align-items-center">
             <span>Characters: {postContentCount}/200</span>
             <Button
@@ -81,11 +73,6 @@ function PostCompose() {
             </Button>
           </div>
         </Form>
-        {/* {file64String !== null ? (
-          <img src={file64StringWithType} alt="chosen" />
-        ) : (
-          <span></span>
-        )} */}
       </div>
     </div>
   );

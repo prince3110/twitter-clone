@@ -20,8 +20,8 @@ public class CommentService {
     @Autowired
     private PostRepository postRepo;
 
-    // @Autowired
-    // private PostService postService;
+//     @Autowired
+//     private PostService postService;
 
 
     public ResponseObjectService insertComment(Comment inputComment) {
@@ -46,8 +46,19 @@ public class CommentService {
             postRepo.save(targetPost);
             responseObj.setStatus("success");
             responseObj.setMessage("success");
-            responseObj.setPayload(commentRepo.save(inputComment));
+            responseObj.setPayload(targetPost);
             return responseObj;
+        }
+    }
+
+    public void deleteComment(Comment comment) {
+        commentRepo.delete(comment);
+    }
+
+    public void deleteCommentByPostId(Long postId) {
+        List<Comment> comments = commentRepo.findByPostId(postId);
+        for(Comment comment: comments) {
+            deleteComment(comment);
         }
     }
     

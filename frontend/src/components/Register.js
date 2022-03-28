@@ -59,6 +59,14 @@ const Register = () => {
         .catch(
             err => {
                 console.log(err);
+                console.log(err.response);
+                if(!err?.response){
+                    setErrMsg("No Server Response");
+                }
+                else{
+                    setErrMsg(err.response.data.message);
+                }
+                console.log(errMsg);
             }
         )
     }
@@ -69,7 +77,6 @@ const Register = () => {
                 navigate("/signin")
             ) : (
                 <div className="register">
-                    <p className={errMsg ? "errmsg" : "offscreen"}>{errMsg}</p>
                     <h1>Register</h1>
                     <form onSubmit={handleSubmit}>
                         <label htmlFor="username">
@@ -83,17 +90,6 @@ const Register = () => {
                             value={username}
                         />
 
-
-                        {/* <label htmlFor="lastname">
-                            Last Name:
-                        </label>
-                        <input
-                            type="text"
-                            id="lastname"
-                            autoComplete="off"
-                            onChange={(e) => setLastName(e.target.value)}
-                            value={lastName}
-                        /> */}
 
                         <label htmlFor="email">
                             Email:
@@ -147,8 +143,9 @@ const Register = () => {
                             Must match the first password input field.
                         </p>
 
-                        <button disabled={!validPwd ? true : false}>Sign Up</button>
+                        <button disabled={!validPwd || !validMatch ? true : false}>Sign Up</button>
                     </form>
+                    <p className={errMsg ? "errmsg" : "offscreen"}>{errMsg}</p>
 
                     <p>
                         Already registered?<br />

@@ -3,20 +3,18 @@ import axios from 'axios';
 import { Button, Form } from 'react-bootstrap';
 import { RiSendPlane2Fill } from 'react-icons/ri';
 import CommentItem from './CommentItem';
+import { BsFillPersonFill } from "react-icons/bs";
 
 function PostItem(props) {
 
     const [username,setUsername] = useState("");
     const [commentContent, setCommentContent] = useState("")
     const [sendButtonDisable, setSendButtonDisable] = useState(true)
-    const comments = props.comments
-
+    const [comments,setComments] = useState(props.comments)
+    const userId = props.userId
 
     useEffect(() => {
-        const data = {
-          userId: `${props.userId}`
-        };
-        axios.post("http://localhost:8080/api/auth/user/profile",data)
+        axios.get(`http://localhost:8080/api/auth/user/${userId}`)
           .then(res => {
             console.log(res)
             setUsername(res.data.payload.username)
@@ -24,7 +22,7 @@ function PostItem(props) {
           .catch(err =>{
             console.log(err)
           })
-      },[])
+    },[])
 
       function handleCommentContentChange(e) {
         setCommentContent(e.target.value);
@@ -42,7 +40,7 @@ function PostItem(props) {
             postId: `${props.id}`,
             content: `${commentContent}`
         };
-        await axios.post("http://localhost:8080/api/auth/insertcomment",data)
+        await axios.post("http://localhost:8080/api/auth/comment",data)
         .then(
             res => {
                 console.log(res);
@@ -59,17 +57,14 @@ function PostItem(props) {
     
   return (
     <div>
-        <div style={
-            {
-                border: "2px solid grey",
-                width: "50%"
-            }
-        }>
-            User:{username}
+        <div>
+          <BsFillPersonFill />
+            {username}
         </div>
         <div style={
             {
                 border: "2px solid grey",
+                borderRadius: "10px",
                 // height: "200px",
                 width: "50%",
                 marginBottom: "50px",
@@ -77,11 +72,7 @@ function PostItem(props) {
             }
         }>
             <p>{props.content}</p>
-            <div style={
-              {
-                paddingTop: "50px"
-              }
-            }>
+            <div className="border rounded-3 border-success p-3 shadow">
               <Form>
                 <Form.Group>
                   <Form.Control
@@ -105,7 +96,7 @@ function PostItem(props) {
 
             <div>
               <div>
-                  <h3>All Comments</h3>
+                  <h4>All Comments</h4>
               </div>
               {comments !== null ? (
                 <ul>

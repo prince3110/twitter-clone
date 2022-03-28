@@ -4,7 +4,6 @@ import java.time.Instant;
 import java.util.List;
 import java.util.Optional;
 
-import com.prince.backend.models.IdObject;
 import com.prince.backend.models.PostEntity;
 import com.prince.backend.repository.PostRepository;
 // import com.prince.backend.repository.UserRepository;
@@ -21,6 +20,9 @@ public class PostService {
     // @Autowired
     // private UserRepository userRepo;
 
+    @Autowired
+    private CommentService commentService;
+
     public ResponseObjectService insertPost(PostEntity inputPost) {
         ResponseObjectService responseObj = new ResponseObjectService();
         inputPost.setCreatedAt(Instant.now());
@@ -30,13 +32,13 @@ public class PostService {
         return responseObj;
     }
 
-    public ResponseObjectService findPostByUserId(IdObject userId) {
+    public ResponseObjectService findPostByUserId(long userId) {
         ResponseObjectService responseObj = new ResponseObjectService();
-        Optional<List<PostEntity>> userPostsOpt = postRepo.findByUserIdOrderByCreatedAtDesc(userId.getUserId());
+        Optional<List<PostEntity>> userPostsOpt = postRepo.findByUserIdOrderByCreatedAtDesc(userId);
         List<PostEntity> userPosts = userPostsOpt.get();
         if(userPosts.isEmpty() == true) {
             responseObj.setStatus("fail");
-            responseObj.setMessage("cannot find any post from user id: " + userId.getUserId());
+            responseObj.setMessage("cannot find any post from user id: " + userId);
             responseObj.setPayload(null);
             return responseObj;
         }
@@ -50,9 +52,20 @@ public class PostService {
 
     public ResponseObjectService findAll() {
         ResponseObjectService responseObj = new ResponseObjectService();
-        responseObj.setPayload(postRepo.findAll());
+        responseObj.setPayload(postRepo.findAllByOrderByCreatedAtDesc());
         responseObj.setStatus("success");
         responseObj.setMessage("success");
+        return responseObj;
+    }
+
+    public ResponseObjectService deletePost(Long postId) {
+        ResponseObjectService responseObj = new ResponseObjectService();
+        PostEntity post = postRepo.getById(postId);
+        commentService.deleteCommentByPostId(postId);
+        postRepo.delete(post);
+        responseObj.setStatus("success");
+        responseObj.setMessage("success");
+        responseObj.setPayload(null);
         return responseObj;
     }
 

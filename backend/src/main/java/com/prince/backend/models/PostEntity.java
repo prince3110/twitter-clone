@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.persistence.*;
 
+
 @Entity
 @Table(name = "post")
 public class PostEntity {
@@ -16,12 +17,6 @@ public class PostEntity {
     private long userId;
     private String content;
     private Instant createdAt;
-
-//    @ManyToMany(fetch = FetchType.LAZY)
-//    @JoinTable(  name = "post_love", 
-//        joinColumns = @JoinColumn(name = "post_postId"), 
-//        inverseJoinColumns = @JoinColumn(name = "Love_postId"))
-//    public Set<Love> loves = new HashSet<>();
 
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn( name = "postId", referencedColumnName = "id")

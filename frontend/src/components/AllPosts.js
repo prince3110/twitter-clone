@@ -19,7 +19,7 @@ function AllPosts() {
     return (
       <div>
         <div>
-            <h2>All Posts</h2>
+            <h3>All Posts</h3>
         </div>
         <ul>
             {posts.map(post => {
@@ -30,6 +30,7 @@ function AllPosts() {
                     content={post.content}
                     id={post.id}
                     comments={post.comments}
+                    setPosts={setPosts}
                     />
                 );
             })

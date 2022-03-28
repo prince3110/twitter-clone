@@ -17,8 +17,8 @@ function App() {
 
       <Route path='/' element={<NewsFeed />} >
         <Route path='home' element={<Home />} />
-        <Route path='myprofile' element={<MyProfile />} />
-        <Route path='allposts' element={<AllPosts />} />
+        <Route path='profile' element={<MyProfile />} />
+        <Route path='posts' element={<AllPosts />} />
       </Route>
     </Routes>
   );

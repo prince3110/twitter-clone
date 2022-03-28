@@ -1,6 +1,6 @@
 import React, {useState, useEffect } from 'react';
 import axios from 'axios';
-import PostItem from './PostItem';
+import MyPostItem from './MyPostItem';
 
 function MyProfile() {
   const [posts,setPosts] = useState([]);
@@ -9,10 +9,7 @@ function MyProfile() {
   const [email, setEmail] = useState("");
 
   useEffect(() => {
-    const data = {
-      userId: `${userId}`
-    };
-    axios.post("http://localhost:8080/api/auth/user/profile",data)
+    axios.get(`http://localhost:8080/api/auth/user/${userId}`)
       .then(res => {
         console.log(res)
         setUsername(res.data.payload.username)
@@ -24,10 +21,7 @@ function MyProfile() {
   },[])
   
   useEffect(() => {
-    const data = {
-      userId: `${userId}`
-    };
-    axios.post("http://localhost:8080/api/auth/myposts",data)
+    axios.get(`http://localhost:8080/api/auth/user/${userId}/post`)
       .then(res => {
         console.log(res)
         setPosts(res.data.payload)
@@ -39,20 +33,21 @@ function MyProfile() {
   return (
     <div>
       <div>
-        <h1>{username} profile</h1>
-        <h3>{email}</h3>
+        <h2>{username} profile</h2>
+        <h4>{email}</h4>
         <br />
       </div>
       {posts !== null ?(
         <ul>
           {posts.map(post => {
             return(
-              <PostItem
+              <MyPostItem
                 key={post.id}
                 userId={post.userId}
                 content={post.content}
                 id={post.id}
                 comments={post.comments}
+                post={post}
               />
             );
           })

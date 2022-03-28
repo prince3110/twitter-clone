@@ -17,6 +17,11 @@ const SignIn = () => {
   const [pwd, setPwd] = useState("");
 
   const [success, setSuccess] = useState(false);
+  const [errMsg, setErrMsg] = useState("");
+
+  useEffect(() => {
+    setErrMsg('')
+  },[username,pwd])
 
   const handleSubmit = async(e) => {
     e.preventDefault();
@@ -49,7 +54,15 @@ const SignIn = () => {
       ).catch(
           err => {
               console.log(err);
-          }
+              console.log(err.response);
+              if(!err?.response){
+                setErrMsg("No Server Response");
+              }
+              else{
+                setErrMsg(err.response.data.message);
+              }
+              console.log(errMsg);
+            }
       )
   }
 
@@ -82,6 +95,8 @@ const SignIn = () => {
 
           <button>Sign In</button>
         </form>
+        <p className={errMsg ? "errmsg" : "offscreen"}>{errMsg}</p>
+
         <p>
           Need an Account?<br />
           <span className='line'>
