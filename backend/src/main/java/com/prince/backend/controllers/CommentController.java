@@ -21,10 +21,9 @@ public class CommentController {
     @Autowired
     private CommentService commentService;
 
-    @PostMapping("/insertcomment")
+    @PostMapping("/comment")
     public ResponseEntity<ResponseObjectService> insertComment(@RequestBody Comment postedComment) {
         return new ResponseEntity<ResponseObjectService>(commentService.insertComment(postedComment), HttpStatus.OK);
     }
 
-    
 }

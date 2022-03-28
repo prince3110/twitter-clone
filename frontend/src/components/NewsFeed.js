@@ -73,16 +73,16 @@ function NewsFeed() {
                     </li>
                   </Link>
                 </Nav.Link> */}
-                <Nav.Link as={Link} to="allposts" className="text-decoration-none">
+                <Nav.Link as={Link} to="posts" className="text-decoration-none">
                   {/* <Link to="allposts" className="text-decoration-none"> */}
                     <li className="list-group-item fs-5 py-3 text-success shadow">
                       <span>
-                        <RiBaseStationLine /> All posts
+                        <RiBaseStationLine /> All Posts
                       </span>
                     </li>
                   {/* </Link> */}
                 </Nav.Link>
-                <Nav.Link as={Link} to="myprofile" className="text-decoration-none">
+                <Nav.Link as={Link} to="profile" className="text-decoration-none">
                   {/* <Link to="myprofile" className="text-decoration-none"> */}
                     <li className="list-group-item fs-5 py-3 text-success shadow">
                       <span>

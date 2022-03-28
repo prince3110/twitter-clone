@@ -1,13 +1,9 @@
 package com.prince.backend.models;
 
-import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Table;
 
-@Entity
-@Table(name = "follows")
 public class Follow {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

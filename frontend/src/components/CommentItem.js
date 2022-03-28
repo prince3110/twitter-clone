@@ -1,15 +1,14 @@
 import axios from 'axios';
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react';
+import { BsFillPersonFill } from "react-icons/bs";
 
 function CommentItem(props) {
     const [username, setUsername] = useState("")
-    const {userId,content} = props
+    const userId = props.userId
+    const content = props.content
 
     useEffect(() => {
-        const data = {
-          userId: `${props.userId}`
-        };
-        axios.post("http://localhost:8080/api/auth/user/profile",data)
+        axios.get(`http://localhost:8080/api/auth/user/${userId}`)
           .then(res => {
             console.log(res)
             setUsername(res.data.payload.username)
@@ -23,23 +22,19 @@ function CommentItem(props) {
     <div>
         {content !== "" ? (
             <div>
-                <div style={
-                    {
-                        border: "2px solid blue",
-                        width: "50%"
-                    }
-                }>
-                User:{username}
+                <div>
+                <BsFillPersonFill />{username}
                 </div>
                 <div style={
                     {
                         border: "2px solid blue",
+                        borderRadius: "10px",
                         // height: "200px",
-                        width: "40%",
+                        width: "50%",
                         marginBottom: "30px",
                         paddingBottom: "30px"
                     }
-                }>            
+                }>
                     <p>{props.content}</p>
                 </div>
             </div>
